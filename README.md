@@ -36,12 +36,17 @@ StateSmithを使用して設計した左右に動くおもちゃ
 ## StateSmith
 ### Controller
 - Buttonのチャタリング除去
+
 ![Controller_Button](/Controller/out/src/Button/private/Button/Button.png)
+
 - コマンドの定期送信
+
 ![Controller_CommandSender](/Controller/out/src/CommandSender/private/CommandSender/CommandSender.png)
+
 
 ### SlideCar
 - モーター制御
+
 ![SlideCar_Motor](/SlideCar/out/src/Motor/private/Motor/Motor.png)
 
 
