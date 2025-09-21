@@ -1,0 +1,13 @@
+# Protobuf作成用
+protobuf
+
+# Simulator用
+pybullet
+
+# For development and code quality checks
+flake8
+isort
+autopep8
+radon
+pip-licenses
+pygount

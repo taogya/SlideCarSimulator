@@ -1,0 +1,105 @@
+@startuml Motor
+
+' //////////////////////// STATE ORGANIZATION ///////////////////////
+' Note: StateSmith treats state names and events as case insensitive.
+' More info: https://github.com/StateSmith/StateSmith/wiki/PlantUML
+
+state STOP
+state LEFT_MOVE
+state LEFT_MOVE_MAX
+state RIGHT_MOVE
+state RIGHT_MOVE_MAX
+
+
+' ///////////////////////// STATE HANDLERS /////////////////////////
+' Syntax: https://github.com/StateSmith/StateSmith/wiki/Behaviors
+
+[*] -> STOP
+
+' STOP
+STOP: enter / Motor_STOP_enter(sm);
+STOP: exit / Motor_STOP_exit(sm);
+STOP: do / Motor_STOP_do(sm);
+STOP --> LEFT_MOVE : LEFT_MOVE
+STOP --> RIGHT_MOVE : RIGHT_MOVE
+
+' LEFT_MOVE
+LEFT_MOVE: enter / Motor_LEFT_MOVE_enter(sm);
+LEFT_MOVE: exit / Motor_LEFT_MOVE_exit(sm);
+LEFT_MOVE: do / Motor_LEFT_MOVE_do(sm);
+LEFT_MOVE --> RIGHT_MOVE : RIGHT_MOVE
+LEFT_MOVE --> STOP : STOP
+LEFT_MOVE --> LEFT_MOVE_MAX : LEFT_MOVE_MAX
+
+' LEFT_MOVE_MAX
+LEFT_MOVE_MAX: enter / Motor_LEFT_MOVE_MAX_enter(sm);
+LEFT_MOVE_MAX: exit / Motor_LEFT_MOVE_MAX_exit(sm);
+LEFT_MOVE_MAX: do / Motor_LEFT_MOVE_MAX_do(sm);
+LEFT_MOVE_MAX --> RIGHT_MOVE : RIGHT_MOVE
+LEFT_MOVE_MAX --> STOP : STOP
+
+
+' RIGHT_MOVE
+RIGHT_MOVE: enter / Motor_RIGHT_MOVE_enter(sm);
+RIGHT_MOVE: exit / Motor_RIGHT_MOVE_exit(sm);
+RIGHT_MOVE: do / Motor_RIGHT_MOVE_do(sm);
+RIGHT_MOVE --> LEFT_MOVE : LEFT_MOVE
+RIGHT_MOVE --> STOP : STOP
+RIGHT_MOVE --> RIGHT_MOVE_MAX : RIGHT_MOVE_MAX
+
+' RIGHT_MOVE_MAX
+RIGHT_MOVE_MAX: enter / Motor_RIGHT_MOVE_MAX_enter(sm);
+RIGHT_MOVE_MAX: exit / Motor_RIGHT_MOVE_MAX_exit(sm);
+RIGHT_MOVE_MAX: do / Motor_RIGHT_MOVE_MAX_do(sm);
+RIGHT_MOVE_MAX --> LEFT_MOVE : LEFT_MOVE
+RIGHT_MOVE_MAX --> STOP : STOP
+
+
+
+
+' //////////////////////// StateSmith config ////////////////////////
+' The below special comment block sets the StateSmith configuration.
+' More info: https://github.com/StateSmith/StateSmith/issues/335
+
+/'! $CONFIG : toml
+
+[RenderConfig]
+FileTop = """
+    """
+AutoExpandedVars = """
+    uint32_t state;
+    uint32_t step;
+    int32_t total_step;
+    """
+
+[RenderConfig.C]
+# CFileExtension = ".inc" # if you want to include sm in another file
+HFileIncludes = """
+    """
+CFileIncludes = """
+
+    extern void Motor_STOP_enter(Motor* sm);
+    extern void Motor_STOP_exit(Motor* sm);
+    extern void Motor_STOP_do(Motor* sm);
+    extern void Motor_LEFT_MOVE_enter(Motor* sm);
+    extern void Motor_LEFT_MOVE_exit(Motor* sm);
+    extern void Motor_LEFT_MOVE_do(Motor* sm);
+    extern void Motor_RIGHT_MOVE_enter(Motor* sm);
+    extern void Motor_RIGHT_MOVE_exit(Motor* sm);
+    extern void Motor_RIGHT_MOVE_do(Motor* sm);
+    extern void Motor_LEFT_MOVE_MAX_enter(Motor* sm);
+    extern void Motor_LEFT_MOVE_MAX_exit(Motor* sm);
+    extern void Motor_LEFT_MOVE_MAX_do(Motor* sm);
+    extern void Motor_RIGHT_MOVE_MAX_enter(Motor* sm);
+    extern void Motor_RIGHT_MOVE_MAX_exit(Motor* sm);
+    extern void Motor_RIGHT_MOVE_MAX_do(Motor* sm);
+
+    """
+IncludeGuardLabel = "{FILENAME}_H"
+
+# More C settings are available. See docs.
+
+[SmRunnerSettings]
+transpilerId = "C99"
+'/
+@enduml

@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/src/Button/private",
+                "${workspaceFolder}/src/Button/public",
+                "${workspaceFolder}/src/CommandSender/private",
+                "${workspaceFolder}/src/CommandSender/public",
+                "${workspaceFolder}/src/Driver/public",
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/../Protobuf/public",
+                "${workspaceFolder}/../Protobuf/nanopb"
+                
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/src/Button/private",
+                    "${workspaceFolder}/src/Button/public",
+                    "${workspaceFolder}/src/CommandSender/private",
+                    "${workspaceFolder}/src/CommandSender/public",
+                    "${workspaceFolder}/src/Driver/public",
+                    "${workspaceFolder}/src",
+                    "${workspaceFolder}/../Protobuf/public",
+                    "${workspaceFolder}/../Protobuf/nanopb"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 4
+}

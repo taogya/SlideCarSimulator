@@ -1,0 +1,34 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/src/Driver/public",
+                "${workspaceFolder}/src/Motor/private",
+                "${workspaceFolder}/src/Motor/public",
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/../Protobuf/public",
+                "${workspaceFolder}/../Protobuf/nanopb"
+                
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/src/Driver/public",
+                    "${workspaceFolder}/src/Motor/private",
+                    "${workspaceFolder}/src/Motor/public",
+                    "${workspaceFolder}/src",
+                    "${workspaceFolder}/../Protobuf/public",
+                    "${workspaceFolder}/../Protobuf/nanopb"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 4
+}

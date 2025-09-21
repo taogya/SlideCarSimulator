@@ -1,0 +1,64 @@
+@startuml CommandSender
+
+' //////////////////////// STATE ORGANIZATION ///////////////////////
+' Note: StateSmith treats state names and events as case insensitive.
+' More info: https://github.com/StateSmith/StateSmith/wiki/PlantUML
+
+state WAIT
+state TICK
+
+
+' ///////////////////////// STATE HANDLERS /////////////////////////
+' Syntax: https://github.com/StateSmith/StateSmith/wiki/Behaviors
+
+[*] -> WAIT
+
+' WAIT
+WAIT: enter / CommandSender_WAIT_enter(sm);
+WAIT: exit  / CommandSender_WAIT_exit(sm);
+WAIT --> TICK : TIMEOUT
+
+' TICK
+TICK: enter / CommandSender_TICK_enter(sm);
+TICK: exit  / CommandSender_TICK_exit(sm);
+TICK: do    / CommandSender_TICK_do(sm);
+TICK --> WAIT
+
+
+' //////////////////////// StateSmith config ////////////////////////
+' The below special comment block sets the StateSmith configuration.
+' More info: https://github.com/StateSmith/StateSmith/issues/335
+
+/'! $CONFIG : toml
+
+[RenderConfig]
+FileTop = """
+    """
+AutoExpandedVars = """
+    SlideCarCommandType type;
+    uint32_t steps;
+    TimerDrvCallback timer_callback;
+    """
+
+[RenderConfig.C]
+# CFileExtension = ".inc" # if you want to include sm in another file
+HFileIncludes = """
+    #include "TimerDrv.h"
+    #include "SlideCarCommand.pb.h"
+    """
+CFileIncludes = """
+
+    extern void CommandSender_WAIT_enter(CommandSender* sm);
+    extern void CommandSender_WAIT_exit(CommandSender* sm);
+    extern void CommandSender_TICK_enter(CommandSender* sm);
+    extern void CommandSender_TICK_exit(CommandSender* sm);
+    extern void CommandSender_TICK_do(CommandSender* sm);
+    """
+IncludeGuardLabel = "{FILENAME}_H"
+
+# More C settings are available. See docs.
+
+[SmRunnerSettings]
+transpilerId = "C99"
+'/
+@enduml

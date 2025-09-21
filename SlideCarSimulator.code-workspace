@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "Controller"
+		},
+		{
+			"path": "SlideCar"
+		},
+		{
+			"path": "Protobuf"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"motor_api.h": "c",
+			"unistd.h": "c",
+			"slidecarcommand.pb.h": "c"
+		}
+	}
+}

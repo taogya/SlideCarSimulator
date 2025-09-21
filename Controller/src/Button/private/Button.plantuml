@@ -1,0 +1,76 @@
+@startuml Button
+
+' //////////////////////// STATE ORGANIZATION ///////////////////////
+' Note: StateSmith treats state names and events as case insensitive.
+' More info: https://github.com/StateSmith/StateSmith/wiki/PlantUML
+
+state IDLE
+state WAIT
+state TICK
+
+
+' ///////////////////////// STATE HANDLERS /////////////////////////
+' Syntax: https://github.com/StateSmith/StateSmith/wiki/Behaviors
+
+[*] -> IDLE
+
+' IDLE
+IDLE: enter / Button_IDLE_enter(sm);
+IDLE: exit / Button_IDLE_exit(sm);
+IDLE --> WAIT : INTERRUPTED
+
+' WAIT
+WAIT: enter / Button_WAIT_enter(sm);
+WAIT: exit / Button_WAIT_exit(sm);
+WAIT --> TICK : TIMEOUT
+
+' TICK
+TICK: enter / Button_TICK_enter(sm);
+TICK: exit / Button_TICK_exit(sm);
+TICK: do / Button_TICK_do(sm);
+TICK --> WAIT : NOT_DETECTED
+TICK --> IDLE : DETECTED
+
+
+' //////////////////////// StateSmith config ////////////////////////
+' The below special comment block sets the StateSmith configuration.
+' More info: https://github.com/StateSmith/StateSmith/issues/335
+
+/'! $CONFIG : toml
+
+[RenderConfig]
+FileTop = """
+    """
+AutoExpandedVars = """
+    uint32_t button_state;
+    uint32_t left_count;
+    uint32_t right_count;
+    uint32_t tick_count;
+    ButtonDrvCallback button_callback;
+    TimerDrvCallback timer_callback;
+    """
+
+[RenderConfig.C]
+# CFileExtension = ".inc" # if you want to include sm in another file
+HFileIncludes = """
+    #include "ButtonDrv.h"
+    #include "TimerDrv.h"
+    """
+CFileIncludes = """
+
+    extern void Button_IDLE_enter(Button* sm);
+    extern void Button_IDLE_exit(Button* sm);
+    extern void Button_WAIT_enter(Button* sm);
+    extern void Button_WAIT_exit(Button* sm);
+    extern void Button_TICK_enter(Button* sm);
+    extern void Button_TICK_exit(Button* sm);
+    extern void Button_TICK_do(Button* sm);
+    """
+IncludeGuardLabel = "{FILENAME}_H"
+
+# More C settings are available. See docs.
+
+[SmRunnerSettings]
+transpilerId = "C99"
+'/
+@enduml
